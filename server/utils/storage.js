@@ -7,6 +7,7 @@ exports.s3Upload = async image => {
   let imageKey = '';
 
   if (image) {
+    console.log(keys.aws)
     const s3bucket = new AWS.S3({
       accessKeyId: keys.aws.accessKeyId,
       secretAccessKey: keys.aws.secretAccessKey,
