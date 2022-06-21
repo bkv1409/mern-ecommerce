@@ -2,9 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 
+require('dotenv').config()
+
 const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
+const PORT = process.env.PORT || 4000;
+const FRONT_PORT = process.env.FRONT_PORT || 8080;
 
 const config = {
   mode: 'development',
@@ -63,10 +67,13 @@ const config = {
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
       inject: true
-    })
-  ],
+    }),
+    // new webpack.EnvironmentPlugin(['NODE_ENV', 'DEBUG']),
+
+],
   devServer: {
-    port: 8080,
+    // port: 8080,
+    port: FRONT_PORT,
     open: true,
     inline: true,
     compress: true,
@@ -74,7 +81,7 @@ const config = {
     disableHostCheck: false,
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000'
+      '/api': 'http://localhost:'+PORT
     }
   },
   devtool: 'eval-source-map'
